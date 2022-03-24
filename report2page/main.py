@@ -25,15 +25,17 @@ def main(path):
                 with tags.table(cls="ref-index"):
                     for folder in paths:
                         with tags.tbody():
-                            tags.tr(tags.h2(folder))
+                            with tags.tr():
+                                tags.th(tags.h2(folder))
 
                         fs = FileSpider(folder)
 
                         for page in fs.html_pages:
-                            with tags.tr():
-                                tags.td(tags.p(tags.code(tags.a(
-                                    strip_type(page),
-                                    href=f"{folder}/{page}"))))
+                            with tags.tbody():
+                                with tags.tr():
+                                    tags.td(tags.p(tags.code(tags.a(
+                                        strip_type(page),
+                                        href=f"{folder}/{page}"))))
 
     with open("index.html", "w") as f:
         f.write(str(doc))
